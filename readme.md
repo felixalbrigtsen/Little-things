@@ -2,8 +2,6 @@
 
 This is a collection of small projects, mostly in JavaScript. 
 
-Try to download and run my chess project!
-
 Pages that use assets like audio and images may be blocked by your browsers CORS cross-origin policies. To circumvent this, spin up a simple web server like `php -S 0.0.0.0:8000` or `python3 -m http.server`.
 
 
