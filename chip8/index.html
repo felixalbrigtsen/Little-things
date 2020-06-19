@@ -1,0 +1,117 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  
+   <style> 
+    body {padding: 0; margin: 0;}
+
+
+
+
+    button {
+      -webkit-appearance: none;
+      font-size: 15px;
+    }
+    .keyPadButton {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 100%;
+      font-size: 20px;
+    }
+
+    .tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;background-color: white;}
+    .tg td{padding:10px 5px;border-style:solid;border-width:1px;word-break:normal;border-color:black;}
+    .tg th{padding:10px 5px;border-style:solid;border-width:1px;word-break:normal;border-color:black;}
+    .tg .tg-baqh{text-align:center;vertical-align:top}
+</style>
+
+</head>
+
+<body style="background-color: lightgrey;">
+  <br><br>
+  <table class="tg">
+    <tr>
+      <th class="tg-baqh" colspan="3">DriverUpdates Javascript Chip8 "Emulator"</th>
+    </tr>
+    <tr>
+      <td class="tg-baqh">Machine controls: 
+        <br>
+        <select id="romSelect" class="romSelect">
+
+        </select>
+        <button onclick="dlROM(document.getElementById('romSelect').value)" class="romSelect">Load ROM</button>
+        <br><br>
+        <button onclick="myChip8.start()">Start</button>
+        <button onclick="myChip8.stop()">Stop</button>
+        <br>
+        <button onclick="myChip8.reset()">Reset</button>
+        <button onclick="myChip8.step()">Step</button>
+
+        <br><br>
+
+        <table style="display: inline-flex; align-content: center;">
+          <tr>
+            <th><b>Address: Opcode</b></th>
+          </tr>
+          <tr>
+            <td>
+                <label id="opcodeDisplay"></label>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+      <td class="tg-baqh">
+        <div id="canvasDiv">
+
+        </div>
+      </td>
+      <td class="tg-baqh" style="width: 200px; align-content: center; padding: 1px">Keypad:
+        <center>
+
+          <table style="width: 90%; align-self: center;">
+            <tr>
+              <td><button id="c8key_1" value="1" class="keyPadButton">1</button></td>
+              <td><button id="c8key_2" value="2" class="keyPadButton">2</button></td>
+              <td><button id="c8key_3" value="3" class="keyPadButton">3</button></td>
+              <td><button id="c8key_c" value="C" class="keyPadButton">C</button></td>
+            </tr>
+            <tr>
+              <td><button id="c8key_4" value="4" class="keyPadButton">4</button></td>
+              <td><button id="c8key_5" value="5" class="keyPadButton">5</button></td>
+              <td><button id="c8key_6" value="6" class="keyPadButton">6</button></td>
+              <td><button id="c8key_d" value="D" class="keyPadButton">D</button></td>
+            </tr>
+            <tr>
+              <td><button id="c8key_7" value="7" class="keyPadButton">7</button></td>
+              <td><button id="c8key_8" value="8" class="keyPadButton">8</button></td>
+              <td><button id="c8key_9" value="9" class="keyPadButton">9</button></td>
+              <td><button id="c8key_e" value="E" class="keyPadButton">E</button></td>
+            </tr>
+            <tr>
+              <td><button id="c8key_a" value="A" class="keyPadButton">A</button></td>
+              <td><button id="c8key_0" value="0" class="keyPadButton">0</button></td>
+              <td><button id="c8key_b" value="B" class="keyPadButton">B</button></td>
+              <td><button id="c8key_f" value="F" class="keyPadButton">F</button></td>
+            </tr>
+          </table>
+
+          <br>
+
+          <div><h3 style="display: inline;">Auto unclick: </h3><input type="checkbox" id="c8Uncheck" style="display: inline;" checked="true"></div>
+
+      </td>
+    </tr>
+  </table>
+
+  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <!-- uncomment lines below to include extra p5 libraries -->
+  <!--<script language="javascript" src="libraries/p5.dom.js"></script>-->
+  <!--<script language="javascript" src="libraries/p5.sound.js"></script>-->
+  <script language="javascript" type="text/javascript" src="roms.js"></script>
+  <script language="javascript" type="text/javascript" src="keypad.js"></script>
+  <script language="javascript" type="text/javascript" src="chip8.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+
+</body>
+</html>
