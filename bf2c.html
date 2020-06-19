@@ -1,0 +1,122 @@
+<html>
+    <head>
+        <title>BrainFuck Transpiler</title>
+
+        <script type="text/javascript">
+
+            //"Frame" for the C code. Enter and exit the main function, and initialize variables.
+            //Current max cells is 1500 in each direction(total of 3001)
+            var cHeader = "#include <stdio.h>\nint main(){\n\tchar cells[3001] = {0};\n\tchar *pvar = cells;\n\tpvar+=1500;\n\n";
+            var cFooter = "\n\n\tputchar('\\n');\n\treturn 0;\n}";
+        
+            var transpile = function() {
+                //Take input from the input-textarea
+                var bfScript = document.getElementById("inText").value;
+
+                //Initialize output variable
+                var output = "";
+                output += cHeader;
+
+                var i = 0
+                while (i<bfScript.length){  //Loop through every character in the input script
+                    inst = bfScript[i];//Current instruction
+
+                    //Ignore all characters that arent in the instruction set. 
+                    //These are regarded as comments and are not transpiled.
+                    if ("+-<>[].,".includes(inst)){
+                        output+="\t" //Add a tab character
+                        switch(inst){
+                            case "+": //+ -> "++*pvar", but to shorten the output, several +'s in a row -> "*pvar += <# of +'s>"
+                                if (bfScript[i+1] != "+"){ //If there is only one, use the short form
+                                    output+="++*pvar";
+                                    break;
+                                }
+                                var j = 0;
+                                while(bfScript[i] == "+"){ //If more than one, count them, and handle them all in one line
+                                    j++;
+                                    i++;
+                                }
+                                output+="*pvar += " + String(j);
+                                i--;
+                                break;
+                            case "-": //- -> "--*pvar", but to shorten the output, several -'s in a row -> "*pvar -= <# of -'s>"
+                                if (bfScript[i+1] != "-"){
+                                        output+="--*pvar";
+                                        break;
+                                    }
+                                    var j = 0;
+                                    while(bfScript[i] == "-"){
+                                        j++;
+                                        i++;
+                                    }
+                                    output+="*pvar -= " + String(j);
+                                    i--;
+                                    break;
+                            case ">": //> -> "++pvar", but to shorten the output, several >'s in a row -> "pvar += <# of >'s>"
+                                if (bfScript[i+1] != ">"){
+                                    output+="++pvar";
+                                    break;
+                                }
+                                var j = 0;
+                                while(bfScript[i] == ">"){
+                                    j++;
+                                    i++;
+                                }
+                                output+="pvar += " + String(j);
+                                i--;
+                                break;
+                            case "<": //< -> "--pvar", but to shorten the output, several <'s in a row -> "pvar -= <# of <'s>"
+                                if (bfScript[i+1] != "<"){
+                                        output+="--pvar";
+                                        break;
+                                    }
+                                    var j = 0;
+                                    while(bfScript[i] == "<"){
+                                        j++;
+                                        i++;
+                                    }
+                                    output+="pvar -= " + String(j);
+                                    i--;
+                                    break;
+                            case ".": output+="putchar(*pvar)"; break;
+                            case ",": output+="*pvar=getchar()"; break;
+                            case "[": output+="while(*pvar){"; break;
+                            case "]": output+="}"; break;
+                        }
+                        if (inst != "[" && inst != "]") { //Escape the lines(but not for loops)
+                            output+=";";
+                        }
+                        output+="\n"; //Insert a newline between each line
+                    }
+                    i++;
+                }
+
+                output+=cFooter; //close out the c program properly
+                document.getElementById("outText").value = output; //Give the output to the user
+            }
+
+        </script>
+    </head>
+
+    <body>
+        <center>
+            <table style="width:100%">
+                <tr>
+                    <th>
+                        <p><b>Input</b></p>
+                        <!-- Input Box-->
+                        <textarea type="text" id="inText" style="width:90%; height: 400px;"></textarea>
+                    </th>
+                    <th>
+                        <p><b>Output</b></p>
+                        <!-- Output Box-->
+                        <textarea type="text" id="outText" style="width:90%; height: 400px;"></textarea>
+                    </th>
+                </tr>
+            </table>
+
+            <!-- "Transpile"-button -->
+            <input type="button" onClick="transpile()" value="Transpile" style="font-size: 60px; background-color: gray;">
+        </center>
+    </body>
+</html>
