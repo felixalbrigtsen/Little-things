@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="no">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Nettbutikk</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="handlekurv">
+            <button id="button_lukkKurv">Lukk</button>
+            <button id="button_tomKurv">Tøm Kurv</button>
+            <table id="kurvTabell">
+                <thead>
+                    <th></th>
+                    <th>Navn</th>
+                    <th>Pris</th>
+                    <th>Fjern</th>
+                </thead>
+            </table>
+            <h2 id="kurvSum">Totalsum: 0,-</h2>
+        </div>
+        <nav>
+            <center>
+            <!-- Navigasjonslinje -->
+            <div id="navbar">
+                <input id="navTekst_sok" placeholder="Søk:">
+                <p>Vis Bukser:</p>
+                <input type="checkbox" id="navCheck_bukser" checked>
+                <p>Vis skjorter: </p>
+                <input type="checkbox" id="navCheck_skjorter" checked>
+                <p>Sorter:</p>
+                <select id="navSelect_sortering">
+                    <option value="0">Standard</option>
+                    <option value="1">Alfabetisk</option>
+                    <option value="2">Farge</option>
+                    <option value="3">Pris</option>
+                    <option value="4">Tilfeldig</option>
+                </select>
+
+                <button id="navButton_kurv">Vis handlekurv</button>
+            </div>
+        </nav>
+        <main>
+            <center>
+            <!-- Rutenett med varer -->
+            <div id="catalog"></div>
+        </main>
+
+        <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-database.js"></script>
+        <script src="script/firebase-setup.js"></script>
+        <script src="script/nettbutikk.js"></script>
+        <script src="script/DOM-scripts.js"></script>
+
+    </body>
+</html>
