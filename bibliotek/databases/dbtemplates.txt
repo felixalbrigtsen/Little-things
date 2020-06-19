@@ -1,0 +1,54 @@
+Inventory item:
+
+
+        {
+            "Title": "",
+            "Author": "",
+            "Year": 0,
+            "Description": "",
+            "Media": "",
+            "Product-id": 0,
+            "Amount": 0,
+            "Amount-in-stock": 0,
+            "Full": true,
+            "Empty": false,
+            "Loaned": []
+        }
+
+Inventory "Loaned" items:
+
+    {
+        "User": "",
+        "Copy-id": 0,
+        "Loaned": "",
+    }
+    
+
+User account:
+
+        {
+            "Username": "",
+            "Administrator": false,
+            "Firstname": "",
+            "Lastname": "",
+            "Password": "",
+            "Loans": []
+        }
+
+User "Loans" Item:
+    {
+        "Product-id": 0,
+        "Copy-id": 0
+    }
+
+
+
+Log entry:
+
+        {
+            "Type": "",
+            "Product-id": 0,
+            "Copy-id": 0,
+            "Username": "",
+            "Time": ""
+        }

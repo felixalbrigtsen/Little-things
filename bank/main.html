@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="no">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bank</title>
+        <link rel="stylesheet" href="main.css">
+    </head>
+
+    <body>
+        <main>
+            <nav id="nav-tabs">
+                <button id="tab_dashboard" class="tabbtn selectedTab" onclick="showTab(event, 'cont_dashboard'); updateDash();">Forside</button>
+                <button id="tab_transaction" class="tabbtn" onclick="showTab(event, 'cont_transaction')">Overfør</button>
+                <button id="tab_history" class="tabbtn" onclick="showTab(event, 'cont_history')">Logg</button>
+                <button id="btn_signout" class="tabbtn" onclick="signout()">Logg ut</button>
+            </nav>
+            <div id="contentdiv">
+
+
+                <div id="cont_dashboard" class="contenttab" style="display: flex;">
+                    <h1>Din konto:</h1>
+                    <div id="accountinfo">
+                        <p id="accountinfo_name"></p>
+                        <p id="accountinfo_dob">Laster...</p>
+                        <br>
+                        <h2 id="accountinfo_balance" class="shake"></h2>
+                    </div>
+                </div>
+
+
+                <div id="cont_transaction" class="contenttab" style="display: none;">
+                    <h1>Overfør penger</h1>
+                    <label>Til konto: <input type="text" id="in_transferToAccount" maxlength="9"></label>
+                    <label>Kroner: <input type="number" id="in_transferAmount"></label>
+                    <button id="btn_transfer" onclick="transfer()">Overfør penger</button>
+                    <div id="transfer_success" style="display: none">Overføring vellykket.</div>
+                    <img src="Bilder/cash.png" id="transferimg" class="hidden" alt="Pengene blir sendt">
+                </div>
+
+
+                <div id="cont_history" class="contenttab" style="display: none;">
+                    <h1>Dine kontobevegelser:</h1>
+                    <table id="historytable"><thead><tr><th>Laster...</th></tr></thead></table>
+                </div>
+
+
+            </div>
+            <div id="errordiv" style="display: none; color: red;"><h2>En feil har oppstått: </h2><h2 id="errortext"></h2></div>
+        </main>
+
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
+        <script src="Javascript/firebasesetup.js"></script>
+
+        <script src="Javascript/dashboard.js"></script>
+        <script src="Javascript/transaction.js"></script>
+        <script src="Javascript/history.js"></script>
+        <script>
+            //Go back to login page if not logged in
+            let accountnum = localStorage.getItem("bank-login-account");
+            if (accountnum == null) { location.replace((location.href).replace("main.html", "login.html")) }
+
+            let dateObj = new Date();
+            let account;
+            let history;
+
+            //Load on startup
+            refreshData();
+
+            function refreshData() {
+                //Load dashboard
+                db.ref("accounts/"+accountnum).once("value").then(data => {
+                    account = data.val(); 
+                    updateDash();
+                });
+
+                //Load history of transactions involving this account
+                db.ref("transactions").once("value").then(data => {
+                    history = [];
+                    transactions = data.val();
+                    for (transactionkey in transactions) {
+                        const transaction = transactions[transactionkey];
+                        if (transaction.from == accountnum || transaction.to == accountnum) {
+                            history.push(transaction);
+                        }
+                    }
+                    updateHistory();
+                })
+            }
+
+            function signout() {
+                //Prompt confirmation for signing out
+                let signout_conf = confirm("Du vil bli logget ut.");
+                if (signout_conf) {
+                    localStorage.removeItem("bank-login-account");
+                    location.reload();
+                }
+            }
+
+            function showError(msg) {
+                //Set the error text and make error visable
+                document.getElementById("errortext").innerHTML = msg;
+                document.getElementById("errordiv").style.display = "block";
+                //Hide again after 3 seconds
+                setTimeout(()=>document.getElementById("errordiv").style.display = "none", 3000)
+            }
+
+            function showTab(event, tab) {
+                //Hide errors when changing tab.
+                document.getElementById("errordiv").style.display = "none";
+
+                let tabButtons = document.getElementsByClassName("tabbtn");
+                let contentTabs = document.getElementsByClassName("contenttab");
+
+                //Hide/disable all tabs. (-1 because of "sign out"-button)
+                for (let i=0; i < tabButtons.length-1; i++) {
+                    tabButtons[i].classList.remove("selectedTab");
+                    contentTabs[i].style.display = "none";
+                }
+
+                //Show selected tab
+                document.getElementById(tab).style.display = "flex";
+                event.target.classList.add("selectedTab")
+            }
+        </script>
+    </body>
+</html>

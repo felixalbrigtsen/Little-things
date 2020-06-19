@@ -1,0 +1,130 @@
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body {
+    text-align: center;
+    background: rgb(31,98,187);
+    background: linear-gradient(180deg, rgba(31,98,187,1) 0%, rgba(150,150,150,1) 92%);
+    padding-top: 30px;
+
+    font-family: monospace;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 85vh;
+    width: 90%;
+    margin: auto;
+    background-color: lightgray;
+}
+
+#nav-tabs {
+    height: 10%;
+    background-color: gray;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+#nav-tabs > button {
+    height: calc(100% - 10px);
+    width: 15%;
+    margin: 10px;
+    margin-bottom: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: #eee;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#nav-tabs > button:hover {
+    background-color: #bbb;
+}
+#nav-tabs > button.selectedTab {
+    background-color: #1f62bb;
+    color: white;
+}
+#btn_signout {
+    float: right;
+}
+
+#contentdiv {
+    height: 85%;
+    padding-top: 40px;
+}
+.contenttab {
+    flex-direction: column;
+}
+
+/* Dashboard */
+#accountinfo > p {
+    font-size: 20px;
+}
+#accountinfo > h2 {
+    font-size: 30px;
+}
+@keyframes shake {
+    0% {
+        transform: rotate(0deg);
+    }
+    5% {
+        transform: rotate(9deg);
+    }
+    10% {
+        transform: rotate(-9deg);
+    }
+    15% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+.shake {
+    animation: shake 2s 3s infinite;
+}
+
+/* Transfer */
+#cont_transaction {
+    height: 80%;
+    width: 60%;
+    margin: auto;
+    justify-content: space-evenly;
+}
+#cont_transaction > button {
+    width: 60%;
+    margin: 0 auto;
+}
+#transferimg {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
+#transferimg.hidden {
+    visibility: hidden;
+}
+#transferimg.animated {
+    transform: translateX(60vw);
+    transition: transform 2s;
+}
+
+/* History */
+#cont_history > table {
+    font-size: 120%;
+    width: 60%;
+    text-align: center;
+    margin: auto;
+}
+
+.trans_in {
+    color: limegreen;
+}
+
+.trans_out {
+    color: red;
+}

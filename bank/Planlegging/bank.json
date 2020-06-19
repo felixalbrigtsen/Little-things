@@ -1,0 +1,30 @@
+{
+    "accounts": {
+        "4321-0001": {
+            "pin": 1010,
+            "name": "Albert Ape",
+            "dob": "1. August 1982",
+            "balance": 150000
+        },
+        "4321-0002": {
+            "pin": 2020,
+            "name": "Bjarne Bjørn",
+            "dob": "23. April 1982",
+            "balance": 250
+        },
+        "4321-0003": {
+            "pin": 3030,
+            "name": "Charles Chicken",
+            "dob": "29. Juni 2007",
+            "balance": 12700
+        }
+    },
+    "transactions": {
+        "t0001": {
+            "from": "",
+            "to": "",
+            "timestamp": "",
+            "total": 0
+        }
+    }
+}

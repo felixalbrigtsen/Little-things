@@ -1,0 +1,20 @@
+@startuml
+title Bank-database
+
+Class Konto {
+    kontonummer: String{id}
+    Navn: String
+    Saldo: Number
+    Fødselsdato: String
+}
+
+Class Transaksjon {
+    key: String{id}
+    Avsender: String
+    Mottaker: String
+    Beløp: Number
+    Tid og dato: String
+}
+
+
+@enduml

@@ -1,0 +1,79 @@
+html, main {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body {
+    text-align: center;
+    background: rgb(31,98,187);
+    background: linear-gradient(180deg, rgba(31,98,187,1) 0%, rgba(150,150,150,1) 92%);
+    padding-top: 30px;
+}
+
+.loginDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 85vh;
+    width: 60%;
+    margin: auto;
+    background-color: lightgray;
+}
+
+.loginDiv > h1 {
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: slateblue;
+    width: 50%;
+    color: white;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.loginDiv > label {
+    font-family: monospace;
+    font-size: 20px;
+    width: 50%;
+    margin: 0 auto;
+    text-align: right;
+    padding-right: 20%;
+}
+
+.loginDiv > button {
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: limegreen;
+    width: 50%;
+    color: white;
+    margin: 0 auto;
+    padding: 10px;
+
+    transition-duration: 0.4s;
+}
+
+.loginDiv > button:hover {
+    background-color: white;
+    color: limegreen;
+    transition-duration: 0.4s;
+}
+
+.loginDiv > label > input {
+    width: 50%;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 20px;
+    text-align: center;
+}
+.loginDiv > label:hover { 
+    color: blue;
+}
+.loginDiv > label:hover > input {
+    border: 2px solid blue;
+}
+
+img {
+    width: 20%;
+    margin: 0 auto;
+}

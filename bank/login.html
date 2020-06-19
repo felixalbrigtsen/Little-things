@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="no">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Logg inn</title>
+        <link rel="stylesheet" href="login.css">
+    </head>
+
+    <body>
+        <main>
+            <div class="loginDiv">
+                <h1>Innlogging</h1>
+                <img src="Bilder/hengelås.png" alt="Vennligst logg inn.">
+                <label>Kontonr: <input type="text" placeholder="1234-1234" maxlength="9" id="in_accNum"></label>
+                <label>PIN: <input type="password" maxlength="4" id="in_pin" pattern="[0-9]*" inputmode="numeric"></label>
+                <button id="btn_signin">Logg inn</button>
+                <div id="errordiv" style="display: none; color: red;"><h2>En feil har oppstått: </h2><h2 id="errortext"></h2></div>
+            </div>
+        </main>
+        <footer><p>Innloggingen vil bli lagret i nettleseren</p></footer>
+
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
+        <script src="Javascript/firebasesetup.js"></script>
+        <script>
+            //Redirect if already logged in
+            if (localStorage.getItem("bank-login-account")) { location.replace((location.href).replace("login.html", "main.html")) }
+            
+            let accounts;
+            //This is not a secure way to handle passwords, but sufficient for this example.
+            db.ref("accounts").once("value").then(snapshot=>{
+                accounts = snapshot.val();
+            });
+
+            function showError(msg) {
+                document.getElementById("errortext").innerHTML = msg;
+                document.getElementById("errordiv").style.display = "block";
+            }
+
+            function signin() {
+                const accountNum = document.getElementById("in_accNum").value;
+                const pin = document.getElementById("in_pin").value;
+
+                if (pin.length != 4) { showError("Hele PIN-koden er ikke skrevet inn."); return; }
+                if (accountNum.length != 9) { showError("Hele kontonummeret er ikke skrevet inn."); return; }
+
+                if (accounts[accountNum] == undefined) {
+                    showError("Account doesn't exist");
+                    return;
+                }
+                if (accounts[accountNum].pin != pin) {
+                    showError("Invalid PIN");
+                    return;
+                } else {
+                    localStorage.setItem("bank-login-account", accountNum);
+                    location.reload();
+                }
+                
+            }
+
+            //document.getElementById("btn_signin").onclick = signin;
+            document.getElementById("btn_signin").addEventListener("click", signin);
+
+            //#region Verify inputs
+            document.getElementById("in_accNum").oninput = (e)=>{
+                //Only allows numbers, except position 5, which must be a dash
+                if (!(
+                    ((e.target.value.length != 5) &&  (["","0","1","2","3","4","5","6","7","8","9"].includes(e.target.value.substr(-1))))
+                    || ((e.target.value.length == 5) && (e.target.value[4]=="-"))
+                    )) {
+                        //If an invalid char was entered, discard the last char
+                        e.target.value = e.target.value.substr(0, e.target.value.length-1);
+                    }
+                if (e.inputType=="insertText" && e.target.value.length == 4) {
+                    //e.target.value += "-";
+                    e.target.value = e.target.value + "-"
+                }
+            }
+
+            //Only allow numbers in the PIN field
+            document.getElementById("in_pin").oninput = (e)=>{
+                if (!["","0","1","2","3","4","5","6","7","8","9"].includes(e.target.value.substr(-1))) {
+                    //If an invalid char was entered, discard the last char
+                    e.target.value = e.target.value.substr(0,e.target.value.length-1);
+                }
+            }
+            //#endregion
+        </script>
+    </body>
+</html>
