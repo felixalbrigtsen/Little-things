@@ -1,7 +1,7 @@
 package main
 
 //Felix Albrigtsen 2021
-//BrainFuck interpreter in Go
+//BrainFuck interpreter in Go, my very first project in golang
 //Reads program from a file, executes it with the supplied input and give output to STDOUT or file.
 //Execute without a filename for usage instructions.
 
